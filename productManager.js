@@ -1,39 +1,25 @@
-class ProductManager{
-    products =[]
-
-    constructor (title,description,price,thumbnail,code,stock)
+class ProductManager {
 
 
-    constructor ()
-    {
-        this.title=title;
-        this.description=description;
-        this.price= price;
-        this.thumbnail =thumbnail;
-        this.code= code;
-        this.stock =stock
-        this.products =[]
+
+    constructor() {
+        this.products = []
         this.idAuto = 1;
     }
 
-    verif(){
-        console.log(products)
-   addProduct(title,description,price,thumbnail,code,stock)
-    {
-        if(!title || !description || !price || ! thumbnail || !code || !stock)
-        {
-            throw Error ('Todos los campos son obligatorios')
+    addProduct(title, description, price, thumbnail, code, stock) {
+        if (!title || !description || !price || !thumbnail || !code || !stock) {
+            throw Error('Todos los campos son obligatorios')
         }
 
         const sameCode = this.products.find(product => product.code === code)
 
-        if(sameCode)
-        {
-            throw Error ('El código ya está en uso')
+        if (sameCode) {
+            throw Error('El código ya está en uso')
         }
 
-        const product ={
-            id:this.idAuto,
+        const product = {
+            id: this.idAuto,
             title,
             description,
             price,
@@ -42,24 +28,21 @@ class ProductManager{
             stock,
         }
         this.products.push(product);
-        this.idAuto ++
+        this.idAuto++
         return product
     }
-    getProducts(){
+    getProducts() {
         return this.products;
     }
 
-    getProductById (id)
-    {
-       const product= this.products.find((product)=> product.id ===id);
+    getProductById(id) {
+        const product = this.products.find((product) => product.id === id);
 
-       if( product)
-       {
-        return product
-       }else
-       {
-        console.error ('Not found')
-       }
+        if (product) {
+            return product
+        } else {
+            console.error('Not found')
+        }
 
     }
 
@@ -67,8 +50,7 @@ class ProductManager{
 
 }
 
-console.log(ProductManager.products)
-const productManager = new ProductManager ();
+const productManager = new ProductManager();
 
 const producto1 = productManager.addProduct("Cerámica gris carrara", "Caja de 25 cerámicas de 25x25", 1345, "ruta/imagen1.jpg", "CE-01", 100);
 
