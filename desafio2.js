@@ -39,7 +39,7 @@ class ProductManager {
                 this.products[index] =
                 {
                     ...this.products[index],
-                    ...updateProducts,
+                    ...this.updateProducts,
                     id
                 }
             }
@@ -97,22 +97,39 @@ class ProductManager {
         this.idAuto++
         return product
     }
-    getProducts() {
-        return this.products;
-    }
-
-    getProductById(id) {
-        const product = this.products.find((product) => product.id === id);
-
-        if (product) {
-            return product
-        } else {
-            console.error('Not found')
+    async getProduct(limit){
+        try
+        {
+            const productFile = await fs.readFile(this.path, "utf-8");
+            const product = JSON.parse (productFile);
+            if (limit) {
+                const subArray = product.slice(0, limit);
+                return subArray;
+            } 
+            return product;
         }
-
+        catch(error){
+            await fs.writeFile(this.path, "[]");
+            return "no existe el archivo.";
+        }
     }
 
+    async getProductById (id){
+        try 
+        {
+            const productFile = await fs.readFile(this.path, "utf-8");
+            let idProduct = JSON.parse (productFile);
 
+            const findProduct = idProduct.find ( (p) => p.id === id);
+
+            if (!findProduct) {
+                throw new Error ("No se encontro este producto")
+            }
+            return findProduct;
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
 
 }
 
